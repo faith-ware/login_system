@@ -1,0 +1,74 @@
+body {
+    background-color:whitesmoke;
+}
+
+.formdiv {
+    background-color: #fff;
+    padding: 20px 20px;
+    text-align: center;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px rgba(77, 75, 75, 0.2);
+    margin-top: 100px;
+}
+
+.formdiv form p {
+    margin: 30px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.formdiv form p label {
+    font-size: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    border-radius: 5px;
+    background-color: white !important;
+    height: 40px;
+    font-size: 16px;
+    padding-left: 10px;
+    border: 1px solid #b4becb;
+}
+
+.formdiv input:focus {
+    outline: none;
+}
+.formdiv button {
+    padding: 15px 10px;
+    width: 100%;
+    background-color:green;
+    outline: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.formdiv h2 {
+    color: black;
+    font-family: sans-serif;
+}
+
+.formdiv button:hover {
+    background-color: blue;
+
+}
+
+.noacc {
+    color: black;
+    font-weight: 550;
+    font-family: sans-serif;
+    text-align : left;
+}
+
+.noacc a {
+    text-decoration: none;
+}

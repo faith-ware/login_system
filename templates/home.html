@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+    <style>
+        /* body {
+            font-family: sans-serif;
+        } */
+
+        .header {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 30px;
+            font-family: sans-serif;
+        }
+
+        .body {
+            background-color: whitesmoke;
+            text-align: center;
+            box-shadow: 10px 10px 20px rgba(77, 75, 75, 0.2);
+            width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .body p {
+            font-size: x-large;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        body p b {
+            font-size: large;
+        }
+
+        table {
+            width: 500px;
+        }
+
+        table tr {
+            width: 500px;
+        }
+
+        table th {
+            font-size: large;
+        }
+
+        table td {
+            padding: 10px;
+            min-width: 100px;
+            max-width: 200px;
+            font-size: large;
+        }
+
+        a {
+            text-decoration: none;
+            color: blue;
+            font-size: large;
+        }
+
+        .header a {
+            background-color: green;
+            padding: 10px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .header a:hover {
+            background-color: lightgreen;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <p class="header"><b> Welcome {{ request.user }} </b> <a href="{% url 'accounts:logout' %}">{{ logout }}</a></p>
+
+    <div class="body">
+        <p>Users</p>
+        <table align="center">
+            <tr><th>ID</th> <th>Name</th> <th>Username</th> <th>Email</th> <th>Update</th> <th>Delete</th></tr>
+            {% for user in users %}
+            <tr><td> {{ user.id }} </td><td> {{ user.first_name }} {{ user.last_name }}</td> <td>{{ user.username }}</td> <td>{{ user.email }}</td> <td><a href="{% url 'accounts:useredit' id=user.id %}">Update</a></td> <td><a href="{% url 'accounts:userdelete' id=user.id %}">Delete</a></td></tr>     
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
