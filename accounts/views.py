@@ -94,7 +94,7 @@ def userDelete(request, id):
     user = User.objects.get(id=id)
     if request.method == "POST":
         user.delete()
-        return redirect("home")
+        return redirect("accounts:login")
     context = {
         "user" : user
     }

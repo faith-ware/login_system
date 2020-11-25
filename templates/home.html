@@ -80,14 +80,24 @@
 
     <p class="header"><b> Welcome {{ request.user }} </b> <a href="{% url 'accounts:logout' %}">{{ logout }}</a></p>
 
-    <div class="body">
-        <p>Users</p>
-        <table align="center">
-            <tr><th>ID</th> <th>Name</th> <th>Username</th> <th>Email</th> <th>Update</th> <th>Delete</th></tr>
-            {% for user in users %}
-            <tr><td> {{ user.id }} </td><td> {{ user.first_name }} {{ user.last_name }}</td> <td>{{ user.username }}</td> <td>{{ user.email }}</td> <td><a href="{% url 'accounts:useredit' id=user.id %}">Update</a></td> <td><a href="{% url 'accounts:userdelete' id=user.id %}">Delete</a></td></tr>     
-            {% endfor %}
-        </table>
-    </div>
+    {% if request.user.is_staff == True %}
+        <div class="body">
+            <p>Users</p>
+            <table align="center">
+                <tr><th>ID</th> <th>Name</th> <th>Username</th> <th>Email</th> <th>Update</th> <th>Delete</th></tr>
+                {% for user in users %}
+                <tr><td> {{ user.id }} </td><td> {{ user.first_name }} {{ user.last_name }}</td> <td>{{ user.username }}</td> <td>{{ user.email }}</td> <td><a href="{% url 'accounts:useredit' id=user.id %}">Update</a></td> <td><a href="{% url 'accounts:userdelete' id=user.id %}">Delete</a></td></tr>     
+                {% endfor %}
+            </table>
+        </div>
+    {% elif request.user.is_staff != True %}
+        <div class="body">
+            <p>Details</p>
+            <table align="center">
+                <tr><th>ID</th> <th>Name</th> <th>Username</th> <th>Email</th> <th>Update</th> <th>Delete</th></tr>
+                <tr><td> {{ user.id }} </td><td> {{ user.first_name }} {{ user.last_name }}</td> <td>{{ user.username }}</td> <td>{{ user.email }}</td> <td><a href="{% url 'accounts:useredit' id=user.id %}">Update</a></td> <td><a href="{% url 'accounts:userdelete' id=user.id %}">Delete</a></td></tr>     
+            </table>
+        </div>
+    {% endif %}
 </body>
 </html>
