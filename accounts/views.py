@@ -3,11 +3,15 @@ from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
 from .forms import LoginForm, SignupForm, Userform
+import re
+
 # Create your views here.
 
 
 def home(request):
     context = {}
+    if not request.user.is_authenticated:
+        return redirect("accounts:login")
     if request.user.is_superuser:
         users = User.objects.all()
         context["users"] = users
@@ -26,18 +30,20 @@ def signup(request):
         password = form.cleaned_data["password"]
         confirm_password = form.cleaned_data["confirm_password"]
 
-        print(firstname,lastname,username,email,password,confirm_password)
 
         if password == confirm_password:
-            if User.objects.filter(username=username).exists():
-                messages.info(request, "Username Taken")
-            elif User.objects.filter(email=email).exists():
-                messages.info(request, "Email Taken")
+            if strongPassword(password):
+                if User.objects.filter(username=username).exists():
+                    messages.info(request, "Username Taken")
+                elif User.objects.filter(email=email).exists():
+                    messages.info(request, "Email Taken")
+                else:
+                    user = User.objects.create_user(username=username, password=password, email=email, first_name=firstname, last_name=lastname)
+                    user.save()
+                    return redirect("accounts:login")
             else:
-                user = User.objects.create_user(username=username, password=password, email=email, first_name=firstname, last_name=lastname)
-                user.save()
-                print("User created")
-                return redirect("accounts:login")
+                messages.info(request, "Password is not strong")
+                print(password)
     context = {
         "form" : form
     }
@@ -99,3 +105,20 @@ def userDelete(request, id):
         "user" : user
     }
     return render(request, "userDelete.html", context)
+
+def strongPassword(password):
+    lowercasePattern = re.compile(r"[a-z]")   #compile to check for lower case
+    uppercasePattern = re.compile(r"[A-Z]")               #compile to check for uppercase
+    digitPattern = re.compile(r"[0-9]")               #compile to check for digits
+
+    lowercasePatternCheck = lowercasePattern.findall(password)
+    uppercasePatternCheck = uppercasePattern.findall(password)
+    digitPatternCheck = digitPattern.findall(password)
+
+    passwordPattern = "".join(lowercasePatternCheck+uppercasePatternCheck+digitPatternCheck)
+
+    if len(passwordPattern) >= 8:
+            if lowercasePatternCheck and uppercasePatternCheck and digitPatternCheck:
+                return True
+            else:
+                return False   
