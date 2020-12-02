@@ -78,13 +78,6 @@ def userEdit(request, id):
     if not request.user.is_authenticated:
         return redirect("accounts:login")
     obj = User.objects.get(id=id)
-    initial_data = {
-        "firstname" : obj.first_name,
-        "lastname" : obj.last_name,
-        "username" : obj.username,
-        "email" : obj.email,
-        "password" : obj.password
-    }
     form = Userform(data=request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
