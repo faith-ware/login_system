@@ -57,13 +57,13 @@
             font-size: large;
         }
 
-        a {
+        .signup a, a {
             text-decoration: none;
             color: blue;
             font-size: large;
         }
 
-        .header a {
+        .signup a, .header a {
             background-color: green;
             padding: 10px;
             color: white;
@@ -73,6 +73,9 @@
         .header a:hover {
             background-color: lightgreen;
             color: black;
+        }
+        .signup {
+            text-align : center;
         }
     </style>
 </head>
@@ -90,6 +93,7 @@
                 {% endfor %}
             </table>
         </div>
+        <p class="signup"><a href="{% url 'accounts:signup' %}">Add User</a></p>
     {% elif request.user.is_staff != True %}
         <div class="body">
             <p>Details</p>
