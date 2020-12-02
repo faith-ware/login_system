@@ -15,7 +15,21 @@
             {{ form.as_p }}
             <button type="submit" value="Sign Up">Sign Up</button>
         </form>
-        <p class="noacc">Have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+
+        {% if not request.user.is_authenticated %}
+            <p class="noacc">Have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
+        {% endif %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <li> {{ message }} </li>
+            {% endfor %}
+        {% endif %}
+
+        <ul>
+            <li>Password must be greater than 7 and must contain upper case, lower case and digit.</li>
+        </ul>
+        
     </div>
 </body>
 </html>
